@@ -9,10 +9,15 @@ var infoEl = document.createElement("div");
 var imgEl = document.createElement("img");
 var div = document.createElement("div");
 var meButton = document.createElement("button");
-var text = document.createTextNode("Game Start");
+
+var quizEl = document.createElement("Quiz");
+var timeEl = document.createElement("time");
+
+
 // Set the text content of relevant elements
 h1El.textContent = "Welcome to Quiz Game";
-h2El.textContent = "This Game is all fact about Covid-19 Virus. choose the correct answer";
+h2El.textContent = "This Game is all fact about Corona Virus. choose the correct answer";
+meButton.innerHTML ="Game Start";
 
 // Append all of our elements
 body.appendChild(h1El);
@@ -20,7 +25,6 @@ body.appendChild(h2El);
 body.appendChild(infoEl);
 infoEl.appendChild(imgEl);
 infoEl.appendChild(div);
-meButton.appendChild(text);
 div.appendChild(meButton);
 
 
@@ -33,5 +37,4 @@ infoEl.setAttribute("style", "margin:auto; width:50%; text-align:center;");
 imgEl.setAttribute("src", "./assets/coronavirus.jpg");
 imgEl.setAttribute("height", 300);
 imgEl.setAttribute("width", 350);
-meButton.setAttribute("style"," text-align:center;background-color:blue;font-size: 28px,font-color: white;");
-text.setAttribute("style","font-size:28px,font-color:white;");
+meButton.setAttribute("style"," font-size: 28px;text-align:center;background-color:blue; color: white; size:50px;");
