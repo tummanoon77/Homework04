@@ -8,16 +8,15 @@ var h2El = document.createElement("h2");
 var infoEl = document.createElement("div");
 var imgEl = document.createElement("img");
 var div = document.createElement("div");
-var meButton = document.createElement("button");
+var startEl = document.createElement ("button")
 
-var quizEl = document.createElement("Quiz");
-var timeEl = document.createElement("time");
+
 
 
 // Set the text content of relevant elements
 h1El.textContent = "Welcome to Quiz Game";
 h2El.textContent = "This Game is all fact about Corona Virus. choose the correct answer";
-meButton.innerHTML ="Game Start";
+startEl.innerHTML = "Game Start"
 
 // Append all of our elements
 body.appendChild(h1El);
@@ -25,7 +24,8 @@ body.appendChild(h2El);
 body.appendChild(infoEl);
 infoEl.appendChild(imgEl);
 infoEl.appendChild(div);
-div.appendChild(meButton);
+infoEl.appendChild(startEl)
+
 
 
 // Style all of our elements
@@ -35,15 +35,97 @@ infoEl.setAttribute("style", "margin:auto; width:50%; text-align:center;");
 imgEl.setAttribute("src", "./assets/coronavirus.jpg");
 imgEl.setAttribute("height", 300);
 imgEl.setAttribute("width", 350);
-meButton.setAttribute("style"," font-size: 28px;text-align:center;background-color:blue; color: white; size:50px;");
+startEl.setAttribute("style"," font-size: 28px;text-align:center;background-color:blue; color: white; size:50px;");
 
 // event game start
 
-meButton.addEventListener("click", startQuiz);
+startEl.addEventListener("click", startQuiz);
 
+// create Element  in question 
+var choiceAEl = document.createElement("A");
+var choiceBEl = document.createElement("B");
+var choiceCEl = document.createElement("C");
+var choiceDEl = document.createElement("D");
+var questionEl = document.createElement("Question");
+var counter = document.createElement("counter");
+var timeGauge =document.createElement("timeGauge");
+var quizEl = document.createElement("Quiz");
+var progressRender =document.createElement ("progress");
+var scoreDiv = document.createElement ("score");
+
+// create arr question
+var question = [
+    {
+    question: " What ",
+    choiceA : "",
+    choiceB : "",
+    choiceC : "",
+    choiceD : "",
+    correct : "A"
+    },
+    {
+        question: " What ",
+        choiceA : "",
+        choiceB : "",
+        choiceC : "",
+        choiceD : "",
+        correct : "C"
+    },
+    {
+        question: " What ",
+        choiceA : "",
+        choiceB : "",
+        choiceC : "",
+        choiceD : "",
+        correct : "D"
+    },
+    {
+        question: " What ",
+        choiceA : "",
+        choiceB : "",
+        choiceC : "",
+        choiceD : "",
+        correct : "C"
+    },
+    {
+        question: " What ",
+        choiceA : "",
+        choiceB : "",
+        choiceC : "",
+        choiceD : "",
+        correct : "B"
+    }
+    ]
+    // add var
+    var lastQuestionIndex = question.length-1;
+    var runningQuestionIndex = 0;
+    // creat a function
+    function renderQuestion(){
+        var q = questions[runningQuestionIndex];
+        question.innerHTML = "<p>"+q.question+"</p>";
+        choiceA.innerHTML = q.choiceA;
+        choiceB.innerHTML = q.choiceB;
+        choiceC.innerHTML = q.choiceC;
+        choiceD.innerHTML = q.choiceD;
+    }
+    
+
+function startQuiz(){
+        startEl.style.display ="none";
+        counterRender();
+        TIMER =setInterval(counterRender,1000);
+        progressRender();
+        questionRender();
+        quizEl.style.display = "block";
+}
+        function scoreRender(){
+            ScoreContainer.style.display ="block";
+            var scorePercent = Math.round(100-score/question.length)
+
+}
 
 function counterRender(){
-    if( count <= questionTime){
+    if( counter <= questionTime){
         counter.innerHTML = count;
         timeGauge.style.width = qaugeUnit*count+"px";
         count++;
@@ -59,20 +141,5 @@ function counterRender(){
        }
     }
 var TIMER =setInterval(counterRender,1000);
-stop running:setInterval();
+
 clearInterval(TIMER);
-
-function startQuiz(){
-        meButton.style.display ="none";
-        counterRender();
-        TIMER =setInterval(counterRender,1000);
-        progressRender();
-        questionRender();
-        quizEl,style.display = "block";
-}
-        function scoreRender(){
-            ScoreContainer.style.display ="block";
-            var scorePercent = Math.round(100-score/question.length)
-
-}
-
