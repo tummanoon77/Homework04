@@ -93,11 +93,12 @@ function startQuiz(){
     renderProgress();
     renderCounter();
     TIMER = setInterval(renderCounter,1000); // 1000ms = 1s
+    submitInitials();
 }
 
 // render progress
 function renderProgress(){
-    for(var q = 0; q <= questions.length+1; q++){
+    for(var q = 0; q <= questions.length-1; q++){
         progress.innerHTML += "<div class='prog' id="+ q +"></div>";
     }
 }
@@ -167,4 +168,47 @@ function scoreRender(){
     
     
     scoreDiv.innerHTML += "<p>"+ scorePerCent +"%</p>";
+}
+function submitInitials()
+{
+    //Get the initals before changing the screen
+    var initals = initalField.value;
+    if(initals === "")
+    {
+        alert("Please enter your name");
+        return;
+    }
+
+    //Display 
+    quiz.style.display = "none";
+
+    //Retrieve the locally stored high score list
+    var highScoreList = JSON.parse(localStorage.getItem("highScoreList"));
+    if(highScoreList === null)
+    {
+        highScoreList = [];
+    }
+    
+    //This creates a new object with the player's initals and score, adds it to the highScoreList array, and then sorts the array by score, with the highest score being first.
+    console.log(score);
+    var initalWithScore = {name: initals, highScore: score};
+    highScoreList.push(initalWithScore);
+    if(highScoreList.length > 1)
+    {
+        highScoreList = highScoreList.sort(function(a,b){
+            return b.highScore-a.highScore;
+        });
+    }
+
+    //Creates HTML elements and appends them as children to the score display
+    for(var i=0; i<highScoreList.length; i++)
+    {
+        var newElement = document.createElement("li");
+        console.log(highScoreList[i].highScore);
+        newElement.textContent = highScoreList[i].name + ": " + highScoreList[i].highScore;
+        highScoreListDisplay.appendChild(newElement);
+    }
+
+    //Saves the new high score list to local storage
+    localStorage.setItem("highScoreList",JSON.stringify(highScoreList));
 }
