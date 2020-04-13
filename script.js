@@ -15,7 +15,7 @@ var counter = document.querySelector("#counter");
 var timeGauge =document.querySelector("#timeGauge");
 var quiz = document.querySelector("#quiz");
 var progress =document.querySelector("#progress");
-var scoreDiv = document.querySelector ("#scoreContainner");
+var scoreDiv = document.querySelector ("#scoreContainer");
 
 
 
@@ -97,7 +97,7 @@ function startQuiz(){
 
 // render progress
 function renderProgress(){
-    for(var q = 0; q <= lastQuestion; q++){
+    for(var q = 0; q <= questions.length+1; q++){
         progress.innerHTML += "<div class='prog' id="+ q +"></div>";
     }
 }
@@ -105,7 +105,7 @@ function renderProgress(){
 // counter render
 
 function renderCounter(){
-    if(count <= questionTime){
+    if(count = questionTime){
         counter.innerHTML = count;
         timeGauge.style.width = count * gaugeUnit + "px";
         count++
