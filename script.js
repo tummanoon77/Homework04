@@ -1,145 +1,170 @@
-// Set the body to a variable
-var body = document.body;
+
 
 
 // create all elements
-var h1El = document.createElement("h1");
-var h2El = document.createElement("h2");
-var infoEl = document.createElement("div");
-var imgEl = document.createElement("img");
-var div = document.createElement("div");
-var startEl = document.createElement ("button")
+
+var container = document.querySelector("#container");
+var start = document.querySelector ("#start");
+var mainEl = document.querySelector("#mainScreen");
+var choiceA = document.querySelector("#A");
+var choiceB = document.querySelector("#B");
+var choiceC = document.querySelector("#C");
+var choiceD = document.querySelector("#D");
+var question = document.querySelector("#question");
+var counter = document.querySelector("#counter");
+var timeGauge =document.querySelector("#timeGauge");
+var quiz = document.querySelector("#quiz");
+var progress =document.querySelector("#progress");
+var scoreDiv = document.querySelector ("#scoreContainner");
 
 
 
 
-// Set the text content of relevant elements
-h1El.textContent = "Welcome to Quiz Game";
-h2El.textContent = "This Game is all fact about Corona Virus. choose the correct answer";
-startEl.innerHTML = "Game Start"
 
-// Append all of our elements
-body.appendChild(h1El);
-body.appendChild(h2El);
-body.appendChild(infoEl);
-infoEl.appendChild(imgEl);
-infoEl.appendChild(div);
-infoEl.appendChild(startEl)
-
-
-
-// Style all of our elements
-h1El.setAttribute("style", "margin:auto; width:50%; text-align:center;");
-h2El.setAttribute("style", "margin:auto; width:100%; text-align:center;");
-infoEl.setAttribute("style", "margin:auto; width:50%; text-align:center;");
-imgEl.setAttribute("src", "./assets/coronavirus.jpg");
-imgEl.setAttribute("height", 300);
-imgEl.setAttribute("width", 350);
-startEl.setAttribute("style"," font-size: 28px;text-align:center;background-color:blue; color: white; size:50px;");
-
-// event game start
-
-startEl.addEventListener("click", startQuiz);
-
-// create Element  in question 
-var choiceAEl = document.createElement("A");
-var choiceBEl = document.createElement("B");
-var choiceCEl = document.createElement("C");
-var choiceDEl = document.createElement("D");
-var questionEl = document.createElement("Question");
-var counter = document.createElement("counter");
-var timeGauge =document.createElement("timeGauge");
-var quizEl = document.createElement("Quiz");
-var progressRender =document.createElement ("progress");
-var scoreDiv = document.createElement ("score");
 
 // create arr question
-var question = [
+var questions = [
     {
-    question: " What ",
-    choiceA : "",
-    choiceB : "",
-    choiceC : "",
-    choiceD : "",
+    question: " What is official name of corona virus? ",
+    choiceA : "covid-19",
+    choiceB : "covid-20",
+    choiceC : "corona",
+    choiceD : "corona-19",
     correct : "A"
     },
     {
-        question: " What ",
-        choiceA : "",
-        choiceB : "",
-        choiceC : "",
-        choiceD : "",
+        question: " Have there been cases of COVID-19 in the U.S.?  ",
+        choiceA : "no",
+        choiceB : "Yes, reported on January 20, 2020",
+        choiceC : "Yes, reported on January 21, 2020",
+        choiceD : "Yes, reported on December 26, 2019",
         correct : "C"
     },
     {
-        question: " What ",
-        choiceA : "",
-        choiceB : "",
-        choiceC : "",
-        choiceD : "",
+        question: "How can I help protect myself? ",
+        choiceA : "Avoid close contact with people who are sick",
+        choiceB : "Avoid touching your eyes, nose, and mouth with unwashed hands.",
+        choiceC : "Wash your hands often with soap and water for at least 20 seconds. Use an alcohol-based hand sanitizer that contains at least 60% alcohol if soap and water are not available",
+        choiceD : "all of above",
         correct : "D"
     },
     {
-        question: " What ",
-        choiceA : "",
-        choiceB : "",
-        choiceC : "",
-        choiceD : "",
+        question: " What are not the symptoms of COVID-19? ",
+        choiceA : "fever",
+        choiceB : "cough",
+        choiceC : "hungry",
+        choiceD : "shortness of breath",
         correct : "C"
     },
     {
-        question: " What ",
-        choiceA : "",
-        choiceB : "",
-        choiceC : "",
-        choiceD : "",
+        question: " How does COVID-19 spread?  ",
+        choiceA : "eat bat",
+        choiceB : "mainly between people who are in close contact with one another (within about 6 feet) ",
+        choiceC : "go outside",
+        choiceD : "have a party",
         correct : "B"
     }
     ]
     // add var
-    var lastQuestionIndex = question.length-1;
-    var runningQuestionIndex = 0;
-    // creat a function
+    var lastQuestion = questions.length-1;
+    var runningQuestion = 0;
+    var count =0;
+    var questionTime = 10; // 10s
+    var gaugeWidth =150; //150px
+    var gaugeUnit = gaugeWidth/questionTime;
+    var TIMER;
+    var score = 0;
+    // create a render function
     function renderQuestion(){
-        var q = questions[runningQuestionIndex];
+        let q = questions[runningQuestion];
         question.innerHTML = "<p>"+q.question+"</p>";
         choiceA.innerHTML = q.choiceA;
         choiceB.innerHTML = q.choiceB;
         choiceC.innerHTML = q.choiceC;
         choiceD.innerHTML = q.choiceD;
     }
-    
+// event game start
 
+start.addEventListener("click", startQuiz);
 function startQuiz(){
-        startEl.style.display ="none";
-        counterRender();
-        TIMER =setInterval(counterRender,1000);
-        progressRender();
-        questionRender();
-        quizEl.style.display = "block";
-}
-        function scoreRender(){
-            ScoreContainer.style.display ="block";
-            var scorePercent = Math.round(100-score/question.length)
-
+    mainEl.style.display = "none";
+    renderQuestion();
+    quiz.style.display = "block";
+    renderProgress();
+    renderCounter();
+    TIMER = setInterval(renderCounter,1000); // 1000ms = 1s
 }
 
-function counterRender(){
-    if( counter <= questionTime){
+// render progress
+function renderProgress(){
+    for(var q = 0; q <= lastQuestion; q++){
+        progress.innerHTML += "<div class='prog' id="+ q +"></div>";
+    }
+}
+
+// counter render
+
+function renderCounter(){
+    if(count <= questionTime){
         counter.innerHTML = count;
-        timeGauge.style.width = qaugeUnit*count+"px";
-        count++;
+        timeGauge.style.width = count * gaugeUnit + "px";
+        count++
     }else{
         count = 0;
+        // change progress color to red
         answerIsWrong();
-        if(runningQuestionIndex<lastQuestionIndex){
-            runningQuestionIndex++;
-            questionRender();
-        }else{ clearInterval(TIMER);
-                scoreRender();
-       }
-       }
+        if(runningQuestion < lastQuestion){
+            runningQuestion++;
+            renderQuestion();
+        }else{
+            // end the quiz and show the score
+            clearInterval(TIMER);
+            scoreRender();
+        }
     }
-var TIMER =setInterval(counterRender,1000);
+}
 
-clearInterval(TIMER);
+// checkAnwer
+
+function checkAnswer(answer){
+    if( answer == questions[runningQuestion].correct){
+        // answer is correct
+        score++;
+        // change progress color to green
+        answerIsCorrect();
+    }else{
+        // answer is wrong
+        // change progress color to red
+        answerIsWrong();
+    }
+    count = 0;
+    if(runningQuestion < lastQuestion){
+        runningQuestion++;
+        renderQuestion();
+    }else{
+        // end the quiz and show the score
+        clearInterval(TIMER);
+        scoreRender();
+    }
+}
+
+// answer is correct
+function answerIsCorrect(){
+    document.getElementById(runningQuestion).style.backgroundColor = "#0f0";
+}
+
+// answer is Wrong
+function answerIsWrong(){
+    document.getElementById(runningQuestion).style.backgroundColor = "#f00";
+}
+
+// score render
+function scoreRender(){
+    scoreDiv.style.display = "block";
+    
+    // calculate the amount of question percent answered by the user
+    var scorePerCent = Math.round(100 * score/questions.length);
+    
+    
+    scoreDiv.innerHTML += "<p>"+ scorePerCent +"%</p>";
+}
