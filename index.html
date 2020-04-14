@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
   <link rel="stylesheet" href="./css/style.css" />
   <title>Quize Game</title>
   
@@ -18,6 +19,9 @@
       <img class="pic" src="./Assets/coronavirus.jpg" alt="coronavirus">
       <br>
       <button id="start">Start Game</button>
+        <div id="b">
+        <button type="button" class="btn btn-success">High Score</button>
+      </div>
       </div>
     </div>
   <div id="quiz" style="display: none;">
@@ -36,8 +40,9 @@
         <div id="progress"></div>
     </div>
       <div id="scoreContainer" style ="display:none";></div>
-
+      <div id="scoreScreen" style="display: none";></div>
     </div>
+    
   <script src="./script.js"></script>
 
 

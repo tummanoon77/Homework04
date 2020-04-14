@@ -16,7 +16,8 @@ var timeGauge =document.querySelector("#timeGauge");
 var quiz = document.querySelector("#quiz");
 var progress =document.querySelector("#progress");
 var scoreDiv = document.querySelector ("#scoreContainer");
-
+var highScore = document.querySelector ("#b");
+var scoreScreen = document.querySelector ("#scoreScreen");
 
 
 
@@ -93,8 +94,22 @@ function startQuiz(){
     renderProgress();
     renderCounter();
     TIMER = setInterval(renderCounter,1000); // 1000ms = 1s
-    submitInitials();
+    
 }
+
+// event hight score
+highScore.addEventListener("click",showScore);
+
+function showScore(){
+    mainEl.style.display = "none";
+    submitInitials();
+    scoreScreen.style.display ="block";
+    scoreScreen.innerHTML += "<p>"+ highScoreList +"</p>";
+}
+
+
+
+
 
 // render progress
 function renderProgress(){
